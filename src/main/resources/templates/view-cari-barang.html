@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Cari Barang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('gudang')}"></nav>
+<div class="container" style="padding: 50px 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px 10px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+        <h1>Cari Barang</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; padding: 10px 30px;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10); align-items: center;">
+        <div style="width: 100%">
+            <form th:action="@{/gudang/cari-barang}" method="get">
+                <div class="input-group"
+                     style="display: flex; align-items: center; gap: 20px; height: 100%; justify-content: space-between">
+                    <select id="dropdown" name="sku"
+                            style="flex: 1;height: 38px; padding-left: 10px; border-radius: 5px 0 0 5px; width: auto;">
+                        <option th:each="barang : ${listBarang}" th:value="${barang.sku}" th:text="${barang.merk}"
+                                th:selected="${barang.sku == sku}"></option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        <table id="datable" class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nama</th>
+                <th>Alamat Gudang</th>
+                <th>stok</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="gudangBarang, iterationStatus : ${gudangBarangList}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${gudangBarang.gudang.nama}"></td>
+                <td th:text="${gudangBarang.gudang.alamatGudang}"></td>
+                <td th:text="${gudangBarang.stok}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

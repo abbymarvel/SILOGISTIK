@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Detail Barang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('barang')}"></nav>
+<div class="container" style="padding: 50px 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; padding: 10px 30px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+        <a style="text: #71825EB2; line-height: 100%; font-size: 20px; font-weight: normal">Detail Barang</a>
+        <a type="button" class="btn btn-md btn-primary"
+           th:href="@{/barang/{idBarang}/ubah(idBarang=${barangDTO.sku})}"
+           style="border: 1px solid rgba(116, 115, 115, 0.25);">
+            Ubah Barang</a>
+    </div>
+    <div style="display: flex; flex-direction: column; padding: 20px 30px; justify-content: center;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10); align-items: start;">
+        <table>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Merk</td>
+                <td>:</td>
+                <td th:text="${barangDTO.merk}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">SKU</td>
+                <td>:</td>
+                <td th:text="${barangDTO.sku}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Tipe Barang</td>
+                <td>:</td>
+                <td th:text="${barangDTO.tipeBarang}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Total Stok</td>
+                <td>:</td>
+                <td th:text="${barangDTO.stok}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Harga</td>
+                <td>:</td>
+                <td th:text="${barangDTO.hargaBarang}"></td>
+            </tr>
+        </table>
+        <h5 style="padding-top: 30px">Daftar Gudang</h5>
+        <table id="datable" class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nama Gudang</th>
+                <th>Alamat Gudang</th>
+                <th>Stok</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="gudangBarang, iterationStatus : ${barangDTO.listGudangBarang}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${gudangBarang.gudang.nama}"></td>
+                <td th:text="${gudangBarang.gudang.alamatGudang}"></td>
+                <td th:text="${gudangBarang.stok}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a type="button" class="btn btn-md btn-light" th:href="@{/barang}"
+           style="border: 1px solid rgba(116, 115, 115, 0.25);">Kembali</a>
+    </div>
+</div>
+</body>
+
+</html>

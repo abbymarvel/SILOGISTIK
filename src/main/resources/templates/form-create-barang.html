@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Tambah Barang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('barang')}"></nav>
+<div class="container" style="padding: 50px 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px 10px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+        <h1>Tambah Barang</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; padding: 10px 30px;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10); align-items: center;">
+        <form th:action="@{/barang/tambah}" th:object="${barangDTO}" style="width: 100%" method="POST">
+            <br>
+            Merk Barang: <br>
+            <input required class="form-control" type="text" th:field="*{merk}"/>
+            <br>
+            Tipe Barang: <br>
+            <select class="form-control" type="double" id="tipeBarang" th:field="*{tipeBarang}">
+                <option value=1>Elektronik</option>
+                <option value=2>Pakaian & Aksesoris</option>
+                <option value=3>Makanan & Minuman</option>
+                <option value=4>Kosmetik</option>
+                <option value=5>Perlengkapan Rumah</option>
+            </select>
+            <br>
+            Harga: <br>
+            <input required class="form-control" type="number" th:field="*{hargaBarang}"/>
+            <br>
+            <div style="padding: 15px 0;">
+                <a class="btn btn-danger" th:href="@{/barang}">Batal</a>
+                <button class="btn btn-primary" type="submit">Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

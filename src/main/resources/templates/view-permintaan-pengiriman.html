@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Detail Permintaan Pengiriman</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('permintaan-pengiriman')}"></nav>
+<div class="container" style="padding: 50px 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; padding: 10px 10px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+        <a style="text: #71825EB2; line-height: 100%; font-size: 20px; font-weight: normal">Detail Gudang</a>
+        <a type="button" class="btn btn-md btn-primary" th:href="@{/permintaan-pengiriman/{id}/cancel(id=${permintaanPengiriman.id})}">Cancel Permintaan</a>
+    </div>
+    <div style="display: flex; flex-direction: column; padding: 10px 30px; justify-content: center;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10); align-items: start;">
+        <table>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">No. Permintaan Pengiriman</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Waktu Permintaan</td>
+                <td>:</td>
+                <td th:text="${#temporals.format(permintaanPengiriman.waktuPermintaan, 'yyyy-MM-dd, HH:mm')}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Karyawan Bertugas</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.karyawan.nama}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Waktu Pengiriman</td>
+                <td>:</td>
+                <td th:text="${#dates.format(permintaanPengiriman.tanggalPengiriman, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Nama Penerima</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.namaPenerima}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Alamat Penerima</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Jenis Layanan</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.jenisLayanan}"></td>
+            </tr>
+            <tr style="height: 30px; margin-left: 5px">
+                <td style="width: 300px">Biaya Pengiriman</td>
+                <td>:</td>
+                <td th:text="${permintaanPengiriman.biayaPengiriman}"></td>
+            </tr>
+        </table>
+        <h5 style="padding: 10px 0">Daftar Barang Dipesan</h5>
+        <table id="datable" class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>SKU</th>
+                <th>Merk</th>
+                <th>Kuantitas Pesanan</th>
+                <th>Total Harga</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ppb, iterationStatus : ${permintaanPengiriman.listPermintaanPengirimanBarang}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${ppb.barang.sku}"></td>
+                <td th:text="${ppb.barang.merk}"></td>
+                <td th:text="${ppb.kuantitasPesanan}"></td>
+                <td th:text="${ppb.kuantitasPesanan * ppb.barang.hargaBarang}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a type="button" class="btn btn-md btn-light" th:href="@{/permintaan-pengiriman}">Kembali</a>
+    </div>
+</div>
+</body>
+
+</html>

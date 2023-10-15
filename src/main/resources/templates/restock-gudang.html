@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Restock Gudang</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('gudang')}"></nav>
+<div class="container" style="padding: 50px 50px; width: 100%;">
+    <form th:action="@{'/gudang/restock-barang'}" th:object="${gudangDTO}" method="POST">
+        <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px 10px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+            <h1>Restock Gudang</h1>
+        </div>
+        <div style="display: flex; flex-direction: column; padding: 10px 30px; justify-content: center;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10);">
+            <div style="align-items: start;">
+                <table>
+                    <tr style="height: 30px; margin-left: 5px">
+                        <td style="width: 300px">Nama Gudang</td>
+                        <td>:</td>
+                        <td th:text="*{nama}"></td>
+                    </tr>
+                    <tr style="height: 30px; margin-left: 5px">
+                        <td style="width: 300px">Alamat Gudang</td>
+                        <td>:</td>
+                        <td th:text="*{alamatGudang}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <input type="hidden" th:field="*{nama}"/>
+                <input type="hidden" th:field="*{alamatGudang}"/>
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="text-center pt-5">
+                    <table id="datable" class="table">
+                        <tr class="d-flex justify-content-end" style="align-items: end; width: 100%">
+                            <div style="display: flex; width: 100%; justify-content: flex-end;">
+                                <button class="btn btn-primary" type="submit" name="addRow" style="display: flex;">
+                                    Tambah Row
+                                </button>
+                            </div>
+                        </tr>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Barang</th>
+                            <th>Kuantitas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="gudangBarang, iterationStatus : *{listGudangBarang}">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td>
+                                <select th:field="*{listGudangBarang[__${iterationStatus.index}__].barang.sku}"
+                                        class="form-control">
+                                    <div th:each="barang : ${listBarang}">
+                                        <option th:value="${barang.sku}"
+                                                th:text="${barang.merk}"></option>
+                                    </div>
+                                </select>
+                            </td>
+                            <td>
+                                <input required class="form-control" type="number"
+                                       th:field="*{listGudangBarang[__${iterationStatus.index}__].stok}"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" th:href="@{/gudang/{id}(id=${gudangDTO.id})}">Batal</a>
+                    <button class="btn btn-primary" type="submit">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

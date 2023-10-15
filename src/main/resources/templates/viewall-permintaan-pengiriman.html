@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Daftar Permintaan Pengiriman</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('permintaan-pengiriman')}"></nav>
+<div class="container" style="padding: 50px 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px 10px;
+        border-radius: 5px 5px 0 0; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.60); align-items: center;">
+        <h1>Daftar Permintaan Pengiriman</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; padding: 10px 30px;
+        border-radius: 0 0 5px 5px; border: 1px solid rgba(116, 115, 115, 0.70); background: rgba(113, 130, 94, 0.10); align-items: center;">
+        <div style="display: flex; width: 100%; justify-content: center; padding: 10px 0">
+            <a class="btn btn-primary" th:href="@{/permintaan-pengiriman/tambah}" style="display: flex;">
+                + Tambah Permintaan Pengiriman
+            </a>
+        </div>
+        <table id="datable" class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Waktu Permintaan</th>
+                <th>Nomor Pengiriman</th>
+                <th>Nama Penerima</th>
+                <th>Alamat Penerima</th>
+                <th>Tanggal Pengiriman</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="permintaanPengiriman, iterationStatus : ${permintaanPengirimanList}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${#temporals.format(permintaanPengiriman.waktuPermintaan, 'yyyy-MM-dd, HH:mm')}"></td>
+                <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
+                <td th:text="${permintaanPengiriman.namaPenerima}"></td>
+                <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
+                <td th:text="${#dates.format(permintaanPengiriman.tanggalPengiriman, 'yyyy-MM-dd')}"></td>
+                <td>
+                    <a type="button" class="btn btn-md btn-primary"
+                       th:href="@{/permintaan-pengiriman/{id}(id=${permintaanPengiriman.id})}">Detail</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
