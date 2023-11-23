@@ -36,6 +36,12 @@ dependencies {
 	implementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
+apply plugin: 'application'
+
+application {
+	mainClassName = 'apap.ti.silogistik2106751796.Silogistik2106751796Application'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
